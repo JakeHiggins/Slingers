@@ -11,8 +11,8 @@ public class ThrownShield : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-	
+	void FixedUpdate () {
+
 	}
 
     public void ThrowShield(Vector2 direction)
