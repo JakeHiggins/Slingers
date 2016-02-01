@@ -25,9 +25,20 @@ public class Bullet : MonoBehaviour {
     {
         if(col.gameObject.tag == "Player")
         {
-            if(col.gameObject.GetComponentInChildren<Shield>().Blocking)
+            if(col.gameObject.GetComponentInChildren<Shield>() != null)
             {
-                col.gameObject.GetComponentInChildren<Shield>().HitShield();   
+                if (col.gameObject.GetComponentInChildren<Shield>().Blocking)
+                {
+                    col.gameObject.GetComponentInChildren<Shield>().HitShield();
+                }
+                else
+                {
+
+                }
+            }
+            else
+            {
+
             }
         }
         GetComponent<Rigidbody2D>().gravityScale = 9.8f;
