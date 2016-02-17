@@ -65,10 +65,25 @@ public class ThrownShield : MonoBehaviour {
     public void ComsumeShield()
     {
         GameObject shield = Instantiate(mainShield) as GameObject;
+        /*
+         * I'm concerned about moving the player.
+         * It may cause issues with collision and triggers.
+         * Let's move the shield instead.
+         * We can still preserve its offset.
+         * - Tim
+        */
         Vector2 originalPosition = _pickupArtist.transform.position;
         _pickupArtist.transform.position = new Vector2(0, 0);
         shield.transform.parent = _pickupArtist.transform;
         _pickupArtist.transform.position = originalPosition;
+        bool xInverted = _pickupArtist.transform.localScale.x < 0; //Check player direction
+        if (xInverted) //Equip Shield to the Left
+        {
+            Vector3 shieldOffset = shield.transform.localPosition;
+            shieldOffset.x = -shieldOffset.x;
+            shield.transform.localPosition = shieldOffset;
+        }
+        Debug.LogFormat("Shield equipped to the {0} side.", xInverted ? "left" : "right");
         Destroy(gameObject);
     }
 }
