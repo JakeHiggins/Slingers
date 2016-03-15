@@ -25,6 +25,7 @@ public class Glass : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        Debug.Log(col.gameObject.tag);
         if(col.gameObject.tag == "Shield" || col.gameObject.tag == "Bullet")
         {
             GameObject particle = Instantiate(particles, transform.position, Quaternion.identity) as GameObject;

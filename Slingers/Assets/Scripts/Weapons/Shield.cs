@@ -76,6 +76,7 @@ public class Shield : MonoBehaviour {
 
             if(_throwValue >0)
             {
+                _player.GetComponent<Inventory>().HasShield = false;
                 GameObject thrown = Instantiate(thrownShield, _player.transform.position, Quaternion.identity) as GameObject;
                 if(_player.FacingRight)
                 {

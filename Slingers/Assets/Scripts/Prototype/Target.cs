@@ -12,4 +12,12 @@ public class Target : MonoBehaviour {
 	void Update () {
 	
 	}
+
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Shield" || col.gameObject.tag == "Bullet")
+        {
+            GameObject.Destroy(this.gameObject);
+        }
+    }
 }
