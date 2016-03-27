@@ -1,0 +1,83 @@
+﻿using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
+using UnityStandardAssets._2D;
+using System.Collections;
+
+[RequireComponent (typeof(SpriteRenderer))]
+[RequireComponent (typeof(AudioSource))]
+
+public class Weapon : MonoBehaviour {
+
+    protected bool _usedHeavy = false;
+
+    protected bool _lightAttacking = false;
+
+    protected float _lightTriggerValue = 0;
+    protected float _heavyTriggerValue = 0;
+
+    public Sprite rightSprite;
+    public Sprite leftSprite;
+    public AudioClip lightAttackSound;
+    public AudioClip heavyAttackSound;
+
+    /// <summary>
+    /// The wait time between light attacks
+    /// Set to 0 for shield
+    /// </summary>
+    public float lightAttackBuffer;
+    protected float _lightAttackTimer;
+
+    protected SpriteRenderer _renderer;
+
+    protected AudioSource _audioSource;
+
+	// Use this for initialization
+	protected void Start () {
+        _renderer = GetComponent<SpriteRenderer>();
+        _audioSource = GetComponent<AudioSource>();
+	}
+	
+	// Update is called once per frame
+	protected void Update () {
+        _lightTriggerValue = CrossPlatformInputManager.GetAxis("LightAttack");
+        _heavyTriggerValue = CrossPlatformInputManager.GetAxis("HeavyAttack");
+	}
+
+    protected void FixedUpdate()
+    {
+        if (!_lightAttacking)
+        {
+            if (_lightTriggerValue > 0)
+            {
+                LightAttack();
+                _lightAttacking = true;
+                _lightAttackTimer = lightAttackBuffer;
+            }
+        }
+        else
+        {
+            _lightAttackTimer--;
+            if (_lightAttackTimer<= 0)
+            {
+                _lightAttacking = false;
+            }
+        }
+
+        if (!_usedHeavy)
+        {
+            if (_heavyTriggerValue > 0)
+                HeavyAttack();
+        }
+    }
+
+    public virtual void LightAttack()
+    {
+        //_audioSource.PlayOneShot(lightAttackSound);
+    }
+
+    public virtual void HeavyAttack()
+    {
+        //_audioSource.PlayOneShot(heavyAttackSound);
+        _usedHeavy = true;
+    }
+}
