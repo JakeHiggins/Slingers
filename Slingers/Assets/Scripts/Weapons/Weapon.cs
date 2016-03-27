@@ -25,6 +25,9 @@ public class Weapon : MonoBehaviour {
     /// Set to 0 for shield
     /// </summary>
     public float lightAttackBuffer;
+
+    public bool lightAttackHasBuffer;
+
     protected float _lightAttackTimer;
 
     protected SpriteRenderer _renderer;
@@ -50,16 +53,22 @@ public class Weapon : MonoBehaviour {
             if (_lightTriggerValue > 0)
             {
                 LightAttack();
-                _lightAttacking = true;
-                _lightAttackTimer = lightAttackBuffer;
+                if (lightAttackHasBuffer)
+                {
+                    _lightAttacking = true;
+                    _lightAttackTimer = lightAttackBuffer;
+                }
             }
         }
         else
         {
-            _lightAttackTimer--;
-            if (_lightAttackTimer<= 0)
+            if (!lightAttackHasBuffer)
             {
-                _lightAttacking = false;
+                _lightAttackTimer--;
+                if (_lightAttackTimer <= 0)
+                {
+                    _lightAttacking = false;
+                }
             }
         }
 
@@ -79,5 +88,10 @@ public class Weapon : MonoBehaviour {
     {
         //_audioSource.PlayOneShot(heavyAttackSound);
         _usedHeavy = true;
+    }
+
+    public bool LightAttacking
+    {
+        get { return _lightAttacking; }
     }
 }

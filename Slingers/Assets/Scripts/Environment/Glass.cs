@@ -33,4 +33,16 @@ public class Glass : MonoBehaviour {
             BreakGlass();
         }
     }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Spear")
+        {
+            Spear spear = col.gameObject.GetComponentInChildren<Spear>();
+            if (spear.LightAttacking)
+            {
+                BreakGlass();
+            }
+        }
+    }
 }
