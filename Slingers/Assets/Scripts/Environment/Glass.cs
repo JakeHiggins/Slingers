@@ -41,6 +41,7 @@ public class Glass : MonoBehaviour {
             Spear spear = col.gameObject.GetComponentInChildren<Spear>();
             if (spear.LightAttacking)
             {
+                GameObject particle = Instantiate(particles, transform.position, Quaternion.identity) as GameObject;
                 BreakGlass();
             }
         }

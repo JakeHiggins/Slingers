@@ -20,6 +20,8 @@ public class Weapon : MonoBehaviour {
     public AudioClip lightAttackSound;
     public AudioClip heavyAttackSound;
 
+    public bool isShield;
+
     /// <summary>
     /// The wait time between light attacks
     /// Set to 0 for shield
@@ -42,8 +44,17 @@ public class Weapon : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected void Update () {
-        _lightTriggerValue = CrossPlatformInputManager.GetAxis("LightAttack");
-        _heavyTriggerValue = CrossPlatformInputManager.GetAxis("HeavyAttack");
+        if (isShield)
+        {
+            _lightTriggerValue = CrossPlatformInputManager.GetAxis("BlockShield");
+            _heavyTriggerValue = CrossPlatformInputManager.GetAxis("ThrowShield");
+
+        }
+        else
+        {
+            _lightTriggerValue = CrossPlatformInputManager.GetAxis("LightAttack");
+            _heavyTriggerValue = CrossPlatformInputManager.GetAxis("HeavyAttack");
+        }
 	}
 
     protected void FixedUpdate()
@@ -75,7 +86,9 @@ public class Weapon : MonoBehaviour {
         if (!_usedHeavy)
         {
             if (_heavyTriggerValue > 0)
+            {
                 HeavyAttack();
+            }
         }
     }
 
@@ -87,7 +100,7 @@ public class Weapon : MonoBehaviour {
     public virtual void HeavyAttack()
     {
         //_audioSource.PlayOneShot(heavyAttackSound);
-        _usedHeavy = true;
+        //_usedHeavy = true;
     }
 
     public bool LightAttacking
