@@ -1,16 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityStandardAssets._2D;
+using UnityStandardAssets.CrossPlatformInput;
 
 public class Spear : Weapon {
 
     private float _swingTimer;
+    private bool _pickupable = false;
 
     public float spearRotation;
     public float swingTime;
     public float spearThrowSpeed;
 
     private PlatformerCharacter2D _player;
+    private GameObject _playerPickup;
 
     // Use this for initialization
     void Start () {
@@ -26,6 +29,13 @@ public class Spear : Weapon {
     void FixedUpdate()
     {
         base.FixedUpdate();
+
+        if(_pickupable)
+        {
+            float pickupAxis = CrossPlatformInputManager.GetAxis("PickUp");
+            if (pickupAxis > 0)
+                PickupSpear(_playerPickup);
+        }
     }
 
     public override void LightAttack()
@@ -84,5 +94,31 @@ public class Spear : Weapon {
             gameObject.layer = 13;
             GetComponent<Rigidbody2D>().isKinematic = true;
         }
+        if (_usedHeavy && col.gameObject.tag == "Player")
+        {
+            _pickupable = true;
+            _playerPickup = col.gameObject;
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D col)
+    {
+        if(_pickupable && col.gameObject.tag == "Player")
+        {
+            _pickupable = false;
+        }
+    }
+
+    void PickupSpear(GameObject player)
+    {
+        Debug.Log("Pick Up Weapon");
+        GetComponent<Rigidbody2D>().isKinematic = true;
+        player.GetComponent<Inventory>().HasWeapon = true;
+        gameObject.tag = "Spear";
+        _usedHeavy = false;
+        transform.parent = player.transform;
+        //transform.localPosition = new Vector2(0, 0);
+        //transform.localRotation = Quaternion.Euler(0, 0, 0);
+        _player = transform.parent.gameObject.GetComponentInParent<PlatformerCharacter2D>();
     }
 }
