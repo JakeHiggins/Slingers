@@ -7,6 +7,8 @@ public class BulletSpawner : MonoBehaviour {
     public Vector2 velocity;
     public GameObject bulletPrefab;
     public float spawn;
+    //A value of negative one indicates no limit
+    public int activeBulletLimit = -1;
 
     private List<GameObject> _bullets;
     private float _spawnTimer;
@@ -19,11 +21,14 @@ public class BulletSpawner : MonoBehaviour {
 	
     void FixedUpdate()
     {
+        bool infiniteBullets = activeBulletLimit != -1;
+        bool tooManyBullets = !infiniteBullets && _bullets.Count < activeBulletLimit;
+
         if(_spawnTimer > 0)
         {
             _spawnTimer--;
         }
-        else
+        else if (!tooManyBullets)
         {
             _spawnTimer = spawn;
             SpawnBullet();
