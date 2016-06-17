@@ -25,11 +25,25 @@ public class Glass : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        Debug.Log(col.gameObject.tag);
         if(col.gameObject.tag == "Shield" || col.gameObject.tag == "Bullet")
         {
             GameObject particle = Instantiate(particles, transform.position, Quaternion.identity) as GameObject;
             particle.transform.rotation = Quaternion.LookRotation(new Vector3(col.relativeVelocity.x, col.relativeVelocity.y, 0));
             BreakGlass();
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.tag == "Spear")
+        {
+            Spear spear = col.gameObject.GetComponentInChildren<Spear>();
+            if (spear.LightAttacking)
+            {
+                GameObject particle = Instantiate(particles, transform.position, Quaternion.identity) as GameObject;
+                BreakGlass();
+            }
         }
     }
 }
