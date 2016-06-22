@@ -29,13 +29,25 @@ public class MortalityScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.tag == "Shield")
+        {
+            Damage();
+            return;
+        }
+
         //check for bullet
         Bullet b = collision.gameObject.GetComponentInChildren<Bullet>();
         if (b == null)
             return;
+        b.life = 0;
+        Damage();
+    }
+
+    public void Damage()
+    {
         //trade health to destroy bullet
         health_current--;
-        b.life = 0;
+
         //check death
         if (health_current <= 0)
         {
@@ -49,7 +61,8 @@ public class MortalityScript : MonoBehaviour {
                     this.gameObject.SetActive(false);
                     //countdown to respawn
                     Invoke("Respawn", respawn_seconds);
-                }else
+                }
+                else
                 {
                     Respawn();
                 }
