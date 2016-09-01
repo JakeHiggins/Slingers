@@ -44,8 +44,14 @@ public class BulletSpawner : MonoBehaviour {
         _bullets.Add(bullet);
     }
 
-    public void DespawnBullet(GameObject b)
+    //Attempts to cleanup a bullet, so the bullet can destroy itself
+    public bool DespawnBullet(GameObject b)
     {
-        _bullets.Remove(b);
+        if (_bullets.Contains(b))
+        {
+            _bullets.Remove(b);
+            return true;
+        }
+        return false;
     }
 }

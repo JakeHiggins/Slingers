@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class Bullet : MonoBehaviour {
 
@@ -16,7 +17,12 @@ public class Bullet : MonoBehaviour {
         if(life <= 0)
         {
             Debug.Log("Despawn Bullet");
-            GameObject.Find("BulletSpawner").GetComponent<BulletSpawner>().DespawnBullet(this.gameObject);
+            //search through spawners to despawn the bullet
+            BulletSpawner[] allSpawners = GameObject.FindObjectsOfType<BulletSpawner>();
+            foreach (BulletSpawner spawner in allSpawners)
+                if (spawner.DespawnBullet(this.gameObject))
+                    break;
+            //regardless of spawners, this bullet must die
             GameObject.Destroy(this.gameObject);
         }
 	}
