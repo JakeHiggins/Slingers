@@ -2,19 +2,26 @@
 using System.Collections;
 using UnityStandardAssets._2D;
 using UnityStandardAssets.CrossPlatformInput;
+using System;
 
-public class P2DKeyboardControl : P2DControlBase
+[System.Serializable]
+public class P2DKeyboardController : P2DController
 {
-    protected override bool get_jump()
+    public bool disable;
+
+    public bool get_jump()
     {
+        if (disable) return false;
         return Input.GetKeyDown(KeyCode.Space);
     }
-    protected override bool get_crouch()
+    public bool get_crouch()
     {
+        if (disable) return false;
         return Input.GetKey(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.RightControl);
     }
-    protected override float get_horizontal()
+    public float get_horizontal()
     {
+        if (disable) return 0;
         float h = 0;
         if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
             h--;
@@ -22,20 +29,29 @@ public class P2DKeyboardControl : P2DControlBase
             h++;
         return h;
     }
-    protected override bool get_heavy_attack()
+    public bool get_heavy_attack()
     {
+        if (disable) return false;
         return Input.GetKeyDown(KeyCode.Mouse0);
     }
-    protected override bool get_light_attack()
+    public bool get_light_attack()
     {
+        if (disable) return false;
         return Input.GetKeyDown(KeyCode.Mouse1);
     }
-    protected override bool get_block_shield()
+    public bool get_block_shield()
     {
+        if (disable) return false;
         return Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
     }
-    protected override bool get_throw_shield()
+    public bool get_throw_shield()
     {
+        if (disable) return false;
         return Input.GetKey(KeyCode.Q);
+    }
+    public bool get_weapon_pickup()
+    {
+        if (disable) return false;
+        return get_crouch();
     }
 }
