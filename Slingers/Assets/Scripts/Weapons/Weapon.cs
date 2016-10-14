@@ -44,18 +44,21 @@ public class Weapon : MonoBehaviour {
 	
 	// Update is called once per frame
 	protected void Update () {
+	}
+
+    public void control(bool l_attack, bool h_attack, bool block, bool toss)
+    {
         if (isShield)
         {
-            _lightTriggerValue = CrossPlatformInputManager.GetAxis("BlockShield");
-            _heavyTriggerValue = CrossPlatformInputManager.GetAxis("ThrowShield");
-
+            _lightTriggerValue = block ? 1 : 0;
+            _heavyTriggerValue = toss ? 1 : 0;
         }
         else
         {
-            _lightTriggerValue = CrossPlatformInputManager.GetAxis("LightAttack");
-            _heavyTriggerValue = CrossPlatformInputManager.GetAxis("HeavyAttack");
+            _lightTriggerValue = l_attack ? 1 : 0;
+            _heavyTriggerValue = h_attack ? 1 : 0;
         }
-	}
+    }
 
     protected void FixedUpdate()
     {

@@ -16,11 +16,6 @@ public class WeaponPickup : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (_pickupable)
-        {
-            if (Input.GetButtonDown("PickUp"))
-                ComsumePickup();
-        }
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -36,8 +31,20 @@ public class WeaponPickup : MonoBehaviour {
     {
         _pickupable = false;
     }
-
-    public void ComsumePickup()
+    public GameObject GetArtist()
+    {
+        return _pickupArtist;
+    }
+    public bool Pickup()
+    {
+        if (_pickupable)
+        {
+            ComsumePickup();
+            return true;
+        }
+        return false;
+    }
+    private void ComsumePickup()
     {
         
         /*
