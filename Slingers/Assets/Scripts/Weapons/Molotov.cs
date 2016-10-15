@@ -19,7 +19,7 @@ public class Molotov : Weapon
     private bool _held;
 
     // Use this for initialization
-    void Start()
+    new void Start()
     {
         base.Start();
 
@@ -32,12 +32,12 @@ public class Molotov : Weapon
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
         base.Update();
     }
 
-    void FixedUpdate()
+    new void FixedUpdate()
     {
         if (_held)
         {

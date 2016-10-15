@@ -18,7 +18,7 @@ public class Shield : Weapon {
     private bool _held;
 
 	// Use this for initialization
-	void Start () {
+	new void Start () {
         base.Start();
 
         //GameObject o = transform.parent.gameObject;
@@ -28,13 +28,13 @@ public class Shield : Weapon {
 
         Debug.Log("Shield Start");
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    new void Update () {
         base.Update();
 	}
 
-    void FixedUpdate()
+    new void FixedUpdate()
     {
         if (_held)
         {

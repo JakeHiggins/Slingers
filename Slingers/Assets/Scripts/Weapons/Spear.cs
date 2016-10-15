@@ -16,17 +16,17 @@ public class Spear : Weapon {
     private GameObject _playerPickup;
 
     // Use this for initialization
-    void Start () {
+    new void Start () {
         base.Start();
         _player = transform.parent.gameObject.GetComponentInParent<PlatformerCharacter2D>();
     }
-	
-	// Update is called once per frame
-	void Update () {
+
+    // Update is called once per frame
+    new void Update () {
         base.Update();
 	}
 
-    void FixedUpdate()
+    new void FixedUpdate()
     {
         base.FixedUpdate();
 
@@ -60,11 +60,11 @@ public class Spear : Weapon {
     {
         base.HeavyAttack();
 
-        Vector3 direction;
+        /*Vector3 direction;
         if (_player.FacingRight)
             direction = new Vector3(0, 0, -55);
         else
-            direction = new Vector3(0, 0, 55);
+            direction = new Vector3(0, 0, 55);*/
 
         iTween.RotateTo(transform.parent.gameObject, iTween.Hash("rotation", new Vector3(0,0,-55), "easeType", "linear", "loopType", "none", "delay", 0, "time", swingTime, "oncomplete", "ThrowSpear", "oncompletetarget", gameObject));
     }
