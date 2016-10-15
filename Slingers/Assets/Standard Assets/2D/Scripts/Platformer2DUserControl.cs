@@ -40,9 +40,14 @@ namespace UnityStandardAssets._2D
         public void FixedUpdate()
         {
             // Pass all parameters to the character control script.
-            gamepad_crouch = gamepad_enabled && Input.GetKey(gamepad_keycode(1));
+            string gamepad_y_axis = "JoyY";
+            if (controller_id > 0)
+                gamepad_y_axis = "Joy" + controller_id + "Y";
+            float gamepad_vertical = CrossPlatformInputManager.GetAxis(gamepad_y_axis);
+            gamepad_crouch = gamepad_enabled && (Input.GetKey(gamepad_keycode(1)) || gamepad_vertical > 0.3f);
             keyboard_crouch = keyboard_enabled &&
-                (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl));
+                (Input.GetKey(KeyCode.LeftControl) || Input.GetKey(KeyCode.RightControl) ||
+                Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow));
             bool crouch = gamepad_crouch || keyboard_crouch;
 
             string gamepad_x_axis = "JoyX";
@@ -50,9 +55,9 @@ namespace UnityStandardAssets._2D
                 gamepad_x_axis = "Joy" + controller_id + "X";
             float gamepad_h = gamepad_enabled ? CrossPlatformInputManager.GetAxis(gamepad_x_axis) : 0;
             float keyboard_h = 0;
-            if (keyboard_enabled && Input.GetKey(KeyCode.RightArrow))
+            if (keyboard_enabled && (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)))
                 keyboard_h++;
-            if (keyboard_enabled && Input.GetKey(KeyCode.LeftArrow))
+            if (keyboard_enabled && (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)))
                 keyboard_h--;
             float h = gamepad_h + keyboard_h;
 

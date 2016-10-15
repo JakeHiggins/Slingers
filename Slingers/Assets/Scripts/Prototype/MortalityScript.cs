@@ -31,17 +31,30 @@ public class MortalityScript : MonoBehaviour {
     {
         //check for bullet
         Bullet b = collision.gameObject.GetComponentInChildren<Bullet>();
-        if (b == null)
+        if (b == null || b.deflected)
             return;
+
+        //check if it hit anything vulnerable
+        bool hit_vulnerable_part = false;
+        foreach(ContactPoint2D contact in collision.contacts)
+        {
+            if(!contact.otherCollider.CompareTag("Shield"))
+            {
+                hit_vulnerable_part = true;
+            }
+        }
+        if(!hit_vulnerable_part)
+        {
+            return;
+        }
+
         //trade health to destroy bullet
         health_current--;
         b.life = 0;
-        //check death
         if (health_current <= 0)
         {
             bool infinite_lives = lives == -1;
             bool has_lives = infinite_lives || lives > 0;
-            //deactivate
             if (has_lives)
             {
                 if (respawn_seconds > 0)

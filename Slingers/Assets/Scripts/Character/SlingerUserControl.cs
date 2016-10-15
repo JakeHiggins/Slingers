@@ -3,7 +3,7 @@ using System.Collections;
 using UnityStandardAssets._2D;
 using UnityStandardAssets.CrossPlatformInput;
 
-//Adds Slingers specific behaviours to the user control (e.g. Weapons)
+//Movement is handled by Platformer2DUserControl, this adds combat
 public class SlingerUserControl : Platformer2DUserControl
 {
     public new void FixedUpdate()

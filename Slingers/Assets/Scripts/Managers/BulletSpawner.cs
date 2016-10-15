@@ -37,7 +37,6 @@ public class BulletSpawner : MonoBehaviour {
 
 	public void SpawnBullet()
     {
-        Debug.Log("Spawn Bullet");
         GameObject bullet = GameObject.Instantiate(bulletPrefab) as GameObject;
         bullet.transform.position = this.transform.position; //Center the bullet
         bullet.GetComponent<Rigidbody2D>().velocity = velocity;

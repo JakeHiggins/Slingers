@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 
 public class Bullet : MonoBehaviour {
-
+    public bool deflected { get; protected set; }
     public float life;
 
 	// Use this for initialization
@@ -16,7 +16,6 @@ public class Bullet : MonoBehaviour {
         life--;
         if(life <= 0)
         {
-            Debug.Log("Despawn Bullet");
             //search through spawners to despawn the bullet
             BulletSpawner[] allSpawners = GameObject.FindObjectsOfType<BulletSpawner>();
             foreach (BulletSpawner spawner in allSpawners)
@@ -48,5 +47,6 @@ public class Bullet : MonoBehaviour {
             }
         }
         GetComponent<Rigidbody2D>().gravityScale = 9.8f;
+        deflected = true;
     }
 }
