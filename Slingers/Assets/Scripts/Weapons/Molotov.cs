@@ -27,8 +27,6 @@ public class Molotov : Weapon
         _player = GetComponentInParent<PlatformerCharacter2D>();
         _collider = GetComponent<CircleCollider2D>();
         _held = true;
-
-        Debug.Log("Shield Start");
     }
 
     // Update is called once per frame

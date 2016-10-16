@@ -29,7 +29,6 @@ public class MortalityScript : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        //check for bullet
         Bullet b = collision.gameObject.GetComponentInChildren<Bullet>();
         if (b == null || b.deflected)
             return;

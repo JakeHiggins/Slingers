@@ -15,7 +15,6 @@ public class Ice : MonoBehaviour {
 
     void OnParticleCollision(GameObject other)
     {
-        Debug.LogFormat("Ice touched {0} and melted.", other);
         Destroy(gameObject);
     }
 }

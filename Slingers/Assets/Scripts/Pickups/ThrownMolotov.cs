@@ -18,7 +18,6 @@ public class ThrownMolotov : ThrownShield {
 
     protected override void OnOnCollisionEnter2D(Collision2D col)
     {
-        Debug.LogFormat("Molotov hit {0} and burst into flames.", col.gameObject);
         //make a home for the flames so we can destroy the molotov
         GameObject newBlast = (GameObject)Instantiate(fireBlast.gameObject, gameObject.transform.position, gameObject.transform.rotation);
         newBlast.GetComponent<ParticleSystem>().Play();
