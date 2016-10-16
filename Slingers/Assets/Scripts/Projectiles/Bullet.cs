@@ -28,6 +28,8 @@ public class Bullet : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
+        if (deflected || life == 0)
+            return;
         Ice ice = col.gameObject.GetComponent<Ice>();
         if (ice != null)
         {
