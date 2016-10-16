@@ -15,6 +15,11 @@ public class Ice : MonoBehaviour {
 
     void OnParticleCollision(GameObject other)
     {
+        Break();
+    }
+
+    public void Break()
+    {
         Destroy(gameObject);
     }
 }

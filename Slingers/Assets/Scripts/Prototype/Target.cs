@@ -37,7 +37,7 @@ public class Target : MonoBehaviour {
         }
     }
 
-    void DestroyTarget()
+    public void DestroyTarget()
     {
         GameObject.Find("GlassAudioSource").GetComponent<AudioSource>().PlayOneShot(destroySound);
         Destroy(gameObject);

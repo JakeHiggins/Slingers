@@ -18,8 +18,17 @@ public class Glass : MonoBehaviour {
 
     public void BreakGlass()
     {
+        BreakGlass(Vector3.zero);
+    }
+    public void BreakGlass(Vector3 velocity)
+    {
+        GameObject particle = Instantiate(particles, transform.position, Quaternion.identity) as GameObject;
+        if(velocity.sqrMagnitude > 0)
+        {
+            particle.transform.rotation = Quaternion.LookRotation(new Vector3(velocity.x, velocity.y, 0));
+        }
         GameObject.Find("GlassAudioSource").GetComponent<AudioSource>().Play();
-        
+
         Destroy(gameObject);
     }
 
@@ -28,9 +37,7 @@ public class Glass : MonoBehaviour {
         Debug.Log(col.gameObject.tag);
         if(col.gameObject.tag == "Shield" || col.gameObject.tag == "Bullet")
         {
-            GameObject particle = Instantiate(particles, transform.position, Quaternion.identity) as GameObject;
-            particle.transform.rotation = Quaternion.LookRotation(new Vector3(col.relativeVelocity.x, col.relativeVelocity.y, 0));
-            BreakGlass();
+            BreakGlass(col.relativeVelocity);
         }
     }
 
@@ -41,7 +48,6 @@ public class Glass : MonoBehaviour {
             Spear spear = col.gameObject.GetComponentInChildren<Spear>();
             if (spear.LightAttacking)
             {
-                Instantiate(particles, transform.position, Quaternion.identity);
                 BreakGlass();
             }
         }

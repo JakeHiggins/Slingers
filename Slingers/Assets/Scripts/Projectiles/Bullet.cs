@@ -28,7 +28,19 @@ public class Bullet : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Player")
+        Ice ice = col.gameObject.GetComponent<Ice>();
+        if (ice != null)
+        {
+            ice.Break();
+            life = 0;
+        }
+        Target target = col.gameObject.GetComponent<Target>();
+        if (target != null)
+        {
+            target.DestroyTarget();
+            life = 0;
+        }
+        if (col.gameObject.tag == "Player")
         {
             if(col.gameObject.GetComponentInChildren<Shield>() != null)
             {
