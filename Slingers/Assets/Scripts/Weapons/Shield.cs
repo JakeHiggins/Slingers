@@ -70,13 +70,29 @@ public class Shield : Weapon {
 
         _player.GetComponent<Inventory>().HasShield = false;
         GameObject thrown = Instantiate(thrownShield, _player.transform.position, Quaternion.identity) as GameObject;
+        //disable collision between the shield and the player, but allow triggers just in case
+        Collider2D[] colliders = thrown.GetComponentsInChildren<Collider2D>();
+        Collider2D[] my_colliders = _player.gameObject.GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D c2d in colliders)
+        {
+            if (!c2d.isTrigger)
+            {
+                foreach (Collider2D my_c2d in my_colliders)
+                {
+                    if (!my_c2d.isTrigger)
+                    {
+                        Physics2D.IgnoreCollision(c2d, my_c2d);
+                    }
+                }
+            }
+        }
         if (_player.FacingRight)
         {
-            thrown.GetComponent<ThrownShield>().ThrowShield(new Vector2(1, 0));
+            thrown.GetComponent<ThrownShield>().ThrowShield(new Vector2(1, 0), _player.gameObject);
         }
         else
         {
-            thrown.GetComponent<ThrownShield>().ThrowShield(new Vector2(-1, 0));
+            thrown.GetComponent<ThrownShield>().ThrowShield(new Vector2(-1, 0), _player.gameObject);
         }
         transform.parent = null;
         _held = false;

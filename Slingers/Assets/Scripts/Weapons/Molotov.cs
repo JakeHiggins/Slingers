@@ -73,11 +73,11 @@ public class Molotov : Weapon
         GameObject thrown = Instantiate(thrownShield, _player.transform.position, Quaternion.identity) as GameObject;
         if (_player.FacingRight)
         {
-            thrown.GetComponent<ThrownShield>().ThrowShield(new Vector2(1, 0));
+            thrown.GetComponent<ThrownShield>().ThrowShield(new Vector2(1, 0), _player.gameObject);
         }
         else
         {
-            thrown.GetComponent<ThrownShield>().ThrowShield(new Vector2(-1, 0));
+            thrown.GetComponent<ThrownShield>().ThrowShield(new Vector2(-1, 0), _player.gameObject);
         }
         transform.parent = null;
         _held = false;
