@@ -13,8 +13,6 @@ public class Shield : Weapon {
 
     private CircleCollider2D _collider;
 
-    private PlatformerCharacter2D _player;
-
     private bool _held;
 
 	// Use this for initialization
@@ -22,7 +20,6 @@ public class Shield : Weapon {
         base.Start();
 
         //GameObject o = transform.parent.gameObject;
-        _player = GetComponentInParent<PlatformerCharacter2D>();
         _collider = GetComponent<CircleCollider2D>();
         _held = true;
 
@@ -45,12 +42,10 @@ public class Shield : Weapon {
                 _collider.enabled = false;
                 if(_player.FacingRight)
                 {
-                    _renderer.sortingLayerName = "WeaponCFace";
                     _renderer.sprite = rightSprite;
                 }
                 else
                 {
-                    _renderer.sortingLayerName = "WeaponBFace";
                     _renderer.sprite = leftSprite;
                 }
             }

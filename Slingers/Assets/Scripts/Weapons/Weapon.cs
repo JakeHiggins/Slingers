@@ -33,13 +33,18 @@ public class Weapon : MonoBehaviour {
     protected float _lightAttackTimer;
 
     protected SpriteRenderer _renderer;
+    protected SpriteRenderer[] all_renderers;
 
     protected AudioSource _audioSource;
 
-	// Use this for initialization
-	protected void Start () {
+    protected PlatformerCharacter2D _player;
+
+    // Use this for initialization
+    protected void Start () {
         _renderer = GetComponent<SpriteRenderer>();
         _audioSource = GetComponent<AudioSource>();
+        _player = GetComponentInParent<PlatformerCharacter2D>();
+        all_renderers = GetComponentsInChildren<SpriteRenderer>();
 	}
 	
 	// Update is called once per frame
@@ -91,6 +96,20 @@ public class Weapon : MonoBehaviour {
             if (_heavyTriggerValue > 0)
             {
                 HeavyAttack();
+            }
+        }
+
+        foreach (SpriteRenderer r in all_renderers)
+        {
+            string front_face = "WeaponCFace";
+            string back_face = "WeaponBFace";
+            if (_player.FacingRight)
+            {
+                r.sortingLayerName = isShield ? front_face : back_face;
+            }
+            else
+            {
+                r.sortingLayerName = isShield ? back_face : front_face;
             }
         }
     }
