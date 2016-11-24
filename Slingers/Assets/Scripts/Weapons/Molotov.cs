@@ -2,6 +2,10 @@
 using System.Collections;
 using UnityStandardAssets._2D;
 
+/// <summary>
+/// Just copy paste of shield to prototype, please improve, sorry
+/// - Tim
+/// </summary>
 [RequireComponent(typeof(CircleCollider2D))]
 public class Molotov : Weapon
 {
@@ -14,8 +18,6 @@ public class Molotov : Weapon
 
     private CircleCollider2D _collider;
 
-    private PlatformerCharacter2D _player;
-
     private bool _held;
 
     // Use this for initialization
@@ -24,7 +26,6 @@ public class Molotov : Weapon
         base.Start();
 
         //GameObject o = transform.parent.gameObject;
-        _player = GetComponentInParent<PlatformerCharacter2D>();
         _collider = GetComponent<CircleCollider2D>();
         _held = true;
     }
