@@ -17,12 +17,17 @@ public class SlingerAiController : MonoBehaviour {
 	
 	// Update is called once per frame
 	void FixedUpdate () {
+        bool light_attack = false;
+        bool heavy_attack = false;
+        bool block = false;
+        bool throw_shield = false;
         bool jump = false;
+        bool face_right = character.FacingRight;
 
-        List<Bullet> incoming_bullets = new List<Bullet>();
         //if a bullet will reach this character within X frames, jump
         Bullet[] all_bullets = GameObject.FindObjectsOfType<Bullet>();
-        foreach(Bullet b in all_bullets)
+        List<Bullet> incoming_bullets = new List<Bullet>();
+        foreach (Bullet b in all_bullets)
         {
             if (b.deflected)
                 continue;
@@ -49,12 +54,36 @@ public class SlingerAiController : MonoBehaviour {
                 }
             }
         }
-
         if(incoming_bullets.Count > 0)
         {
-            jump = true;
+            block = true;
         }
 
+        //aim at the player and shoot
+        PlatformerCharacter2D target = null;
+        PlatformerCharacter2D[] all_characters = GameObject.FindObjectsOfType<PlatformerCharacter2D>();
+        foreach(PlatformerCharacter2D p2d in all_characters)
+        {
+            if (p2d == character) continue;
+            target = p2d;
+            break;
+        }
+        if(target != null)
+        {
+            if (target.transform.position.x < transform.position.x)
+                face_right = false;
+            else
+                face_right = true;
+            //light_attack = true;
+        }
+
+        if (character.FacingRight != face_right)
+            character.Flip();
         character.Move(0, false, jump);
-	}
+        Weapon[] all_weapons = character.GetComponentsInChildren<Weapon>();
+        foreach (Weapon weapon in all_weapons)
+        {
+            weapon.control(light_attack, heavy_attack, block, throw_shield);
+        }
+    }
 }
