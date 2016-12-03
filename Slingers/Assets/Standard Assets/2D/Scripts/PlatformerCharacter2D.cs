@@ -19,6 +19,7 @@ namespace UnityStandardAssets._2D
         private Animator m_Anim;            // Reference to the player's animator component.
         private Rigidbody2D m_Rigidbody2D;
         private bool m_FacingRight = true;  // For determining which way the player is currently facing.
+        private bool m_justJumped; //Lasts 1 frame after a successful jump
 
         private void Awake()
         {
@@ -35,15 +36,22 @@ namespace UnityStandardAssets._2D
         {
             m_Grounded = false;
 
-            // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
-            // This can be done using layers instead but Sample Assets will not overwrite your project settings.
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
-            for (int i = 0; i < colliders.Length; i++)
+            if (!m_justJumped)
             {
-                if (colliders[i].gameObject != gameObject)
-                    m_Grounded = true;
+                // The player is grounded if a circlecast to the groundcheck position hits anything designated as ground
+                // This can be done using layers instead but Sample Assets will not overwrite your project settings.
+                Collider2D[] colliders = Physics2D.OverlapCircleAll(m_GroundCheck.position, k_GroundedRadius, m_WhatIsGround);
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    if (colliders[i].gameObject != gameObject)
+                    {
+                        m_Grounded = true;
+                        break;
+                    }
+                }
+                m_Anim.SetBool("Ground", m_Grounded);
             }
-            m_Anim.SetBool("Ground", m_Grounded);
+            m_justJumped = false;
 
             // Set the vertical animation
             m_Anim.SetFloat("vSpeed", m_Rigidbody2D.velocity.y);
@@ -95,6 +103,7 @@ namespace UnityStandardAssets._2D
             {
                 // Add a vertical force to the player.
                 m_Grounded = false;
+                m_justJumped = true;
                 m_Anim.SetBool("Ground", false);
                 m_Rigidbody2D.AddForce(new Vector2(0f, m_JumpForce));
             }
