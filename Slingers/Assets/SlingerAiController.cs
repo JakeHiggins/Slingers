@@ -24,6 +24,8 @@ public class SlingerAiController : MonoBehaviour {
         Bullet[] all_bullets = GameObject.FindObjectsOfType<Bullet>();
         foreach(Bullet b in all_bullets)
         {
+            if (b.deflected)
+                continue;
             Rigidbody2D body = b.GetComponent<Rigidbody2D>();
             Vector2 direction = body.velocity;
             float speed = direction.magnitude;
