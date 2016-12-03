@@ -16,7 +16,7 @@ public class SlingerUserControl : Platformer2DUserControl
         bool gamepad_block = gamepad_enabled && Input.GetKey(gamepad_keycode(4));
         bool gamepad_throw = gamepad_enabled && Input.GetKeyDown(gamepad_keycode(5));
 
-        bool keyboard_l_attack = keyboard_enabled && (Input.GetKey(KeyCode.Mouse0) || Input.GetKey(KeyCode.F));
+        bool keyboard_l_attack = keyboard_enabled && (Input.GetKey(KeyCode.Mouse0) || Input.GetKey(KeyCode.F) || Input.GetKey(KeyCode.Z) || Input.GetKey(KeyCode.X));
         bool keyboard_h_attack = keyboard_enabled && Input.GetKeyDown(KeyCode.Mouse1);
         bool keyboard_block = keyboard_enabled &&
             (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift));
